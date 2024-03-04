@@ -1,4 +1,7 @@
 *.pth
 *.pyc
 *.tar
+*.caffemodel
+*.txt
+pretrained_ckpt
 .vscode
