@@ -1,7 +1,6 @@
 from src.utils import *
 from src.Processor import Processor
 
-#TODO add downloader for each algorithm
 #TODO add logging for each application
 
 def main():
