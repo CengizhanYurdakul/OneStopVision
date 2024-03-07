@@ -22,21 +22,26 @@ def main():
     )
 
     if app == "🏠Home Page":
+        
         st.title("OneStopVision")
-        st.header("**Applications**")
         st.write("The following list are the applications you can use here. You can access the applications here from the sidebar on the left.")
-        st.subheader("🔎Face Detection")
-        st.write("Describe application, input-output informations")
-        st.subheader("🎭Face Recognition")
-        st.write("Describe application, input-output informations")
-        st.subheader("📊Facial Attribute Analysis")
-        st.write("Describe application, input-output informations")
-        st.subheader("👃Face Parsing")
-        st.write("Describe application, input-output informations")
-        st.subheader("🌌Landmark Extraction")
-        st.write("Describe application, input-output informations")
-        st.subheader("📐Head Pose Estimation")
-        st.write("Describe application, input-output informations")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader("🔎Face Detection")
+            st.write("Effortlessly pinpoint human faces in any image.")
+            st.subheader("🎭Face Recognition")
+            st.write("Unmask the identity behind the face with lightning-fast recognition.")
+            st.subheader("📊Facial Attribute Analysis")
+            st.write("See beyond the surface - analyze facial features to understand gender, age, and emotional state.")
+            st.subheader("👃Face Parsing")
+            st.write("Dissect the face with precision, segmenting features like eyes, nose, and mouth.")
+        with col2:
+            st.subheader("🌌Landmark Extraction")
+            st.write("Capture the intricate details of the face with 68 key landmarks.")
+            st.subheader("📐Head Pose Estimation")
+            st.write("Determine the precise orientation and tilt of a person's head.")
+            st.subheader("🪄ControlNet Preprocessing")
+            st.write("Determine the precise orientation and tilt of a person's head.")
         
     elif app == "🔎Face Detection":
         if (st.session_state.Processor is None):
