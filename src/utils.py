@@ -103,7 +103,17 @@ def initSessionState() -> None:
         st.session_state["headPoseEstimationPitchOutput"] = None  
         
     if "headPoseEstimationRollOutput" not in st.session_state:
-        st.session_state["headPoseEstimationRollOutput"] = None  
+        st.session_state["headPoseEstimationRollOutput"] = None 
+        
+    # ControlNet Operations States
+    if "inputImageControlNetOperations" not in st.session_state:
+        st.session_state["inputImageControlNetOperations"] = None 
+    
+    if "controlNetMethod" not in st.session_state:
+        st.session_state["controlNetMethod"] = None 
+        
+    if "controlNetOutputImage" not in st.session_state:
+        st.session_state["controlNetOutputImage"] = None 
         
 def readImageFromFiles(text="Choose an image") -> np.array:
     uploadedFile = st.file_uploader(text, type=["png", "jpg", "jpeg", "PNG", "JPG", "JPEG"])
@@ -116,6 +126,9 @@ def readImageFromFiles(text="Choose an image") -> np.array:
         
 def clickRunButton() -> None:
     st.session_state.runButton = True
+    
+def declickRunButton() -> None:
+    st.session_state.runButton = False
     
 def clearSession() -> None:
     st.session_state.runButton = False
@@ -160,3 +173,8 @@ def clearSession() -> None:
     st.session_state.headPoseEstimationYawOutput = None
     st.session_state.headPoseEstimationPitchOutput = None
     st.session_state.headPoseEstimationRollOutput = None
+    
+    # ControlNet Operations States
+    st.session_state.inputImageControlNetOperations = None
+    st.session_state.controlNetMethod = None
+    st.session_state.controlNetOutputImage = None
