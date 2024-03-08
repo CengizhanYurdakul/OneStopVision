@@ -17,7 +17,8 @@ def main():
             "📊Facial Attribute Analysis",
             "👃Face Parsing",
             "🌌Landmark Extraction",
-            "📐Head Pose Estimation"
+            "📐Head Pose Estimation",
+            "🎛️ControlNet Operations"
         )
     )
 
@@ -40,8 +41,8 @@ def main():
             st.write("Capture the intricate details of the face with 68 key landmarks.")
             st.subheader("📐Head Pose Estimation")
             st.write("Determine the precise orientation and tilt of a person's head.")
-            st.subheader("🪄ControlNet Preprocessing")
-            st.write("Determine the precise orientation and tilt of a person's head.")
+            st.subheader("🎛️ControlNet Operations")
+            st.write("Unlock powerful image manipulation tools like Canny edge detection, M-LSD line segmentation etc. - all within your control.")
         
     elif app == "🔎Face Detection":
         if (st.session_state.Processor is None):
@@ -120,7 +121,20 @@ def main():
             st.session_state.Processor.initNecessaryModels()
             
         st.session_state.Processor.pipelineHeadPoseEstimation()
+    
+    elif app == "🎛️ControlNet Operations":
+        if (st.session_state.Processor is None) and (st.session_state.currentApp is not app):
+            st.session_state.currentApp = app
+            st.session_state.Processor = Processor()
+            st.session_state.Processor.initNecessaryModels()
+        elif (st.session_state.currentApp is not app):
+            clearSession()
+            st.session_state.currentApp = app
+            st.session_state.Processor.deleteUnnecessaryModels()
+            st.session_state.Processor.initNecessaryModels()
 
+        st.session_state.Processor.pipelineControlNetOperations()
+        
     else:
         pass
 
