@@ -21,13 +21,7 @@ class Processor:
         self.faceParser = None
         self.landmarkExtractor = None
         self.headPoseEstimator = None
-        
-        self.densePoseEstimator = None
-        self.cannyEdgeDetector = None
-        self.mlsdLineDetector = None
-        self.hedBoundaryDetector = None
-        self.openPoseDetector = None
-        self.depthEstimator = None
+        self.controlNetOperator = None
         
     def initNecessaryModels(self):
         self.app = st.session_state.currentApp
@@ -49,6 +43,8 @@ class Processor:
         elif self.app == "📐Head Pose Estimation":
             self.initFaceDetector()
             self.initHeadPoseEstimator()
+        elif self.app == "🎛️ControlNet Operations":
+            self.initControlNetOperator()
         
     def deleteUnnecessaryModels(self):
         self.app = st.session_state.currentApp
@@ -58,30 +54,43 @@ class Processor:
             self.deleteFaceParser()
             self.deleteLandmarkExtractor()
             self.deleteHeadPoseEstimator()
+            self.deleteControlNetOperations()
         elif self.app == "🎭Face Recognition":
             self.deleteFaceAttributeAnalyzer()
             self.deleteFaceParser()
             self.deleteLandmarkExtractor()
             self.deleteHeadPoseEstimator()
+            self.deleteControlNetOperations()
         elif self.app == "📊Facial Attribute Analysis":
             self.deleteFaceRecognizer()
             self.deleteFaceParser()
             self.deleteLandmarkExtractor()
             self.deleteHeadPoseEstimator()
+            self.deleteControlNetOperations()
         elif self.app == "👃Face Parsing":
             self.deleteFaceRecognizer()
             self.deleteFaceAttributeAnalyzer()
             self.deleteHeadPoseEstimator()
+            self.deleteControlNetOperations()
         elif self.app == "🌌Landmark Extraction":
             self.deleteFaceRecognizer()
             self.deleteFaceAttributeAnalyzer()
             self.deleteFaceParser()
             self.deleteHeadPoseEstimator()
+            self.deleteControlNetOperations()
         elif self.app == "📐Head Pose Estimation":
             self.deleteFaceRecognizer()
             self.deleteFaceAttributeAnalyzer()
             self.deleteFaceParser()
             self.deleteLandmarkExtractor()
+            self.deleteControlNetOperations()
+        elif self.app == "🎛️ControlNet Operations":
+            self.deleteFaceDetector()
+            self.deleteFaceRecognizer()
+            self.deleteFaceAttributeAnalyzer()
+            self.deleteFaceParser()
+            self.deleteLandmarkExtractor()
+            self.deleteHeadPoseEstimator()
     
     def initFaceDetector(self):
         from src.FaceDetection.FaceDetector import FaceDetector
@@ -148,7 +157,18 @@ class Processor:
             del self.headPoseEstimator
             self.headPoseEstimator = None
             torch.cuda.empty_cache()
-        
+            
+    def initControlNetOperator(self):
+        from src.ControlNet.ControlNetOperator import ControlNetOperator
+        if self.controlNetOperator is None:
+            self.controlNetOperator = ControlNetOperator()
+            
+    def deleteControlNetOperations(self):
+        if self.controlNetOperator is not None:
+            del self.controlNetOperator
+            self.controlNetOperator = None
+            torch.cuda.empty_cache()
+            
     def pipelineFaceDetection(self):
         st.session_state.inputImageFaceDetection = readImageFromFiles("Choose an image for input!")
         st.button("Run", on_click=clickRunButton)
@@ -398,3 +418,43 @@ class Processor:
                 st.text("Yaw: %s" % st.session_state.headPoseEstimationYawOutput)
                 st.text("Pitch: %s" % st.session_state.headPoseEstimationPitchOutput)
                 st.text("Roll: %s" % st.session_state.headPoseEstimationRollOutput)
+                
+    def pipelineControlNetOperations(self):
+        st.session_state.inputImageControlNetOperations = readImageFromFiles("Choose an image for input!")
+        
+        st.session_state.controlNetMethod = st.radio(
+            "Choose ControlNet method",
+            ["Canny", "M-LSD", "HED", "OpenPose", "Depth", "Semantic Segmentation"]
+        )
+        
+        st.button("Run", on_click=clickRunButton)
+        
+        if st.session_state.runButton:
+            if (st.session_state.inputImageControlNetOperations is None):
+                st.error("Input image is not selected!")
+                st.session_state.runButton = False
+            else:
+                if st.session_state.controlNetMethod == "Canny":
+                    st.session_state.controlNetOutputImage = self.controlNetOperator.mainCanny(st.session_state.inputImageControlNetOperations)
+                elif st.session_state.controlNetMethod == "M-LSD":
+                    st.session_state.controlNetOutputImage = self.controlNetOperator.mainMLSD(st.session_state.inputImageControlNetOperations)
+                elif st.session_state.controlNetMethod == "HED":
+                    st.session_state.controlNetOutputImage = self.controlNetOperator.mainHED(st.session_state.inputImageControlNetOperations)
+                elif st.session_state.controlNetMethod == "OpenPose":
+                    st.session_state.controlNetOutputImage = self.controlNetOperator.mainOpenPose(st.session_state.inputImageControlNetOperations)
+                elif st.session_state.controlNetMethod == "Depth":
+                    st.session_state.controlNetOutputImage = self.controlNetOperator.mainDepth(st.session_state.inputImageControlNetOperations)
+                elif st.session_state.controlNetMethod == "Semantic Segmentation":
+                    st.session_state.controlNetOutputImage = self.controlNetOperator.mainSemanticSegmentation(st.session_state.inputImageControlNetOperations)
+
+            if (st.session_state.controlNetOutputImage is not None) and (st.session_state.inputImageControlNetOperations is not None):
+                st.divider()
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    st.image(cv2.cvtColor(st.session_state.inputImageControlNetOperations, cv2.COLOR_BGR2RGB), caption="ControlNet input image")
+                
+                with col2:
+                    st.image(cv2.cvtColor(st.session_state.controlNetOutputImage, cv2.COLOR_BGR2RGB), caption="ControlNet output image")
+            
+            declickRunButton()
