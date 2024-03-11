@@ -12,7 +12,8 @@ Unleash the power of computer vision in your projects!  OneStopVision is your on
 | Head Pose Estimation | OneStopVision estimates head pose in yaw, pitch, and roll, even visualizing it directly on the image for an intuitive understanding of facial orientation. |
 | ControlNet Operations | OneStopVision empowers you with M-LSD, HED, OpenPose, depth estimation, and semantic segmentation, all visualized for seamless integration and groundbreaking visual analysis. |
 
-If you want to see how the features work, visit [README_VIS.md](README_VIS.md).
+- If you want to see how the features work, visit [README_VIS.md](README_VIS.md).
+- You can check what will be added as a feature in the next steps from the [TODO.md](TODO.md) file.
 
 ## Install
 ```
