@@ -12,6 +12,8 @@ Unleash the power of computer vision in your projects!  OneStopVision is your on
 | Head Pose Estimation | OneStopVision estimates head pose in yaw, pitch, and roll, even visualizing it directly on the image for an intuitive understanding of facial orientation. |
 | ControlNet Operations | OneStopVision empowers you with M-LSD, HED, OpenPose, depth estimation, and semantic segmentation, all visualized for seamless integration and groundbreaking visual analysis. |
 
+If you want to see how the features work, visit [README_VIS.md](README_VIS.md).
+
 ## Install
 ```
 conda create --name onestop python==3.9.18 -y
