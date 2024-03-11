@@ -1,6 +1,6 @@
 # OneStopVision
 <p align="center">
-  <img src="src/assets/logo.jpeg" width="256" title="logo">
+  <img src="src/assets/logo.png" width="256" title="logo">
 </p>
 Unleash the power of computer vision in your projects!  OneStopVision is your one-stop shop for pre-trained algorithms, offering a comprehensive toolkit for facial analysis, object detection, and depth estimation. Dive into tasks like face recognition, landmark extraction, and head pose estimation – all readily available and accompanied by a user-friendly README for smooth installation and integration.
 
