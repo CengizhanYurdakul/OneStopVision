@@ -28,3 +28,12 @@ bash downloadModels.sh
 ```
 steamlit run app.py
 ```
+
+## Acknowledgement
+- **Face Detection:** The structure used for face detection is taken from the [DSFD-Pytorch-Inference repository](https://github.com/hukkelas/DSFD-Pytorch-Inference).
+- **Face Recognition:** The model used for face recognition was taken from the [insightface repository](https://github.com/deepinsight/insightface). [Arcface R100](https://arxiv.org/abs/1801.07698) backbone was used to compare the identities.
+- **Facial Attribute Analysis:** [MiVOLO](https://github.com/wildchlamydia/mivolo) repository was used for Gender and age estimation. [ResidualMaskingNetwork repository](https://github.com/phamquiluan/ResidualMaskingNetwork) was used for emotion recognition.
+- **Face Parsing:** The [face-parsing.PyTorch repository](https://github.com/zllrunning/face-parsing.PyTorch) was used for face parsing.
+- **Landmark Extraction:** The [face-alignment](https://github.com/1adrianb/face-alignment) repository was used for 68 landmark extraction.
+- **Head Pose Estimation:** The [6DRepNet](https://github.com/thohemp/6DRepNet) repository was used for head pose estimation.
+- **ControlNet Operations:** The [controlnet-aux library](https://github.com/huggingface/controlnet_aux), [lllyasviel/ControlNet](https://huggingface.co/lllyasviel/ControlNet) models were used for ControlNet operations.
