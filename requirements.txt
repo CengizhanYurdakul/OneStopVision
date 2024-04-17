@@ -1,4 +1,4 @@
-streamlit
+streamlit==1.24.0
 git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 opencv-python==4.9.0.80
 scikit-image==0.22.0
