@@ -6,9 +6,15 @@ from src.FaceRecognition.Arcface import *
 
 class FaceRecognizer:
     def __init__(self) -> None:
+        if torch.cuda.is_available():
+            self.device = "cuda"
+        else:
+            self.device = "cpu"
+            
         self.arcface = IResNet()
         self.arcface.load_state_dict(torch.load("src/Models/ArcfaceR100.pth"))
         self.arcface.eval()
+        self.arcface.to(self.device)
         
         self.arcfaceTemplate = np.array([[38.2946, 51.6963],
                                          [73.5318, 51.5014],
@@ -63,11 +69,11 @@ class FaceRecognizer:
         input2 = self.preprocess(alignedImage2)
         
         with torch.no_grad():
-            identity1 = self.arcface(input1)
-            identity2 = self.arcface(input2)
+            identity1 = self.arcface(input1.to(self.device))
+            identity2 = self.arcface(input2.to(self.device))
         
         normalizedIdentity1 = self.l2Norm(identity1)
         normalizedIdentity2 = self.l2Norm(identity2)
         
         cosineSimilarity = torch.nn.functional.cosine_similarity(normalizedIdentity1, normalizedIdentity2)
-        return cosineSimilarity, alignedImage1, alignedImage2, identity1, identity2
+        return cosineSimilarity, alignedImage1, alignedImage2, identity1.cpu(), identity2.cpu()
